@@ -17,25 +17,6 @@
  * - ASL 2.0: http://www.apache.org/licenses/LICENSE-2.0.txt
  */
 
-buildscript {
-    repositories {
-        maven {
-            url "http://repo.springsource.org/plugins-release";
-        }
-    }
-    dependencies {
-        classpath(group: "org.springframework.build.gradle",
-            name: "propdeps-plugin", version: "0.0.7");
-    }
-};
-
-configure(allprojects) {
-    apply(plugin: "propdeps");
-    apply(plugin: "propdeps-maven");
-    apply(plugin: "propdeps-idea");
-    apply(plugin: "propdeps-eclipse");
-}
-
 apply(plugin: "java");
 apply(plugin: "maven");
 apply(plugin: "signing");
@@ -43,9 +24,8 @@ apply(plugin: "osgi");
 apply(plugin: "idea");
 apply(plugin: "eclipse");
 
-group = "com.github.fge";
-version = "1.10-SNAPSHOT";
-description = "JSON Patch (RFC 6902) and JSON Merge Patch (RFC 7386) implementation in Java";
+group = "com.box";
+version = "1.10";
 sourceCompatibility = "1.6";
 targetCompatibility = "1.6"; // defaults to sourceCompatibility
 
@@ -53,10 +33,8 @@ targetCompatibility = "1.6"; // defaults to sourceCompatibility
  * List of dependencies
  */
 dependencies {
-    provided(group: "com.google.code.findbugs", name: "jsr305",
-        version: "2.0.1");
-    compile(group: "com.github.fge", name: "jackson-coreutils",
-        version: "1.6");
+    compile(group: "com.google.code.findbugs", name: "jsr305", version: "2.0.1");
+    compile(group: "com.github.fge", name: "jackson-coreutils", version: "1.6");
     testCompile(group: "org.testng", name: "testng", version: "6.8.7") {
         exclude(group: "junit", module: "junit");
         exclude(group: "org.beanshell", module: "bsh");
@@ -121,7 +99,7 @@ artifacts {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = "1.11";
+    gradleVersion = "2.5";
     distributionUrl = "http://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip";
 }
 
@@ -134,9 +112,9 @@ task pom << {
  */
 
 project.ext {
-    gitrwscm = sprintf("git@github.com:fge/%s", name);
-    gitroscm = sprintf("https://github.com/fge/%s.git", name);
-    projectURL = sprintf("https://github.com/fge/%s", name);
+    description = "JSON Patch (RFC 6902) and JSON Merge Patch (RFC 7386) implementation in Java";
+    scmURL = sprintf("git@github.com:box-metadata/%s.git", name);
+    projectURL = sprintf("https://github.com/box-metadata/%s", name);
     sonatypeStaging = "https://oss.sonatype.org/service/local/staging/deploy/maven2/";
     sonatypeSnapshots = "https://oss.sonatype.org/content/repositories/snapshots/";
 };
@@ -190,13 +168,13 @@ uploadArchives {
     pom.project {
         name "${project.name}";
         packaging "jar";
-        description "${project.description}";
+        description "${project.ext.description}";
         url "${projectURL}";
 
         scm {
-            url "${gitrwscm}";
-            connection "${gitrwscm}";
-            developerConnection "${gitroscm}";
+            url "${scmURL}";
+            connection "scm:git:${scmURL}";
+            developerConnection "scm:git${scmURL}";
         }
 
         licenses {
@@ -214,9 +192,9 @@ uploadArchives {
 
         developers {
             developer {
-                id "fge";
-                name "Francis Galiegue";
-                email "fgaliegue@gmail.com";
+                id "metadata-dev";
+                name "Metadata Dev";
+                email "metadata-dev@box.com";
             }
         }
     }
