@@ -49,7 +49,7 @@ public final class CopyOperation
     public CopyOperation(@JsonProperty("from") final JsonPointer from,
         @JsonProperty("path") final JsonPointer path)
     {
-        super("copy", from, path);
+        super(OPERATION_NAME, from, path);
     }
 
     @Override
