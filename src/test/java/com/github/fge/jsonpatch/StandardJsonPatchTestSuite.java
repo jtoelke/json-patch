@@ -1,8 +1,9 @@
 package com.github.fge.jsonpatch;
 
+import com.github.fge.jsonpatch.operation.JsonPatchOperationFactory;
+
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public final class StandardJsonPatchTestSuite extends JsonPatchTestSuite
 {

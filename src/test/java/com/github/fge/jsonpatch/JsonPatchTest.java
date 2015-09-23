@@ -22,14 +22,13 @@ package com.github.fge.jsonpatch;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.github.fge.jackson.JacksonUtils;
+import com.github.fge.jsonpatch.operation.JsonPatchOperation;
 import com.github.fge.msgsimple.bundle.MessageBundle;
 import com.github.fge.msgsimple.load.MessageBundles;
 import com.google.common.collect.ImmutableList;
 import org.mockito.ArgumentCaptor;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import java.io.IOException;
 
 import static org.mockito.Mockito.*;
 import static org.testng.Assert.*;

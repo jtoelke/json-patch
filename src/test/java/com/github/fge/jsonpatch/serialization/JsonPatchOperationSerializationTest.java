@@ -19,7 +19,6 @@
 
 package com.github.fge.jsonpatch.serialization;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -27,6 +26,7 @@ import com.github.fge.jackson.JacksonUtils;
 import com.github.fge.jackson.JsonLoader;
 import com.github.fge.jackson.JsonNumEquals;
 import com.github.fge.jsonpatch.*;
+import com.github.fge.jsonpatch.operation.JsonPatchOperationFactory;
 import com.google.common.base.Equivalence;
 import com.google.common.collect.Lists;
 import org.testng.annotations.DataProvider;
