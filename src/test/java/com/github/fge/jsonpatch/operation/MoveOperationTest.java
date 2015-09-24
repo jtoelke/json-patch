@@ -27,6 +27,6 @@ public final class MoveOperationTest
     public MoveOperationTest()
         throws IOException
     {
-        super(new MoveOperationFactory());
+        super(MoveOperation.OPERATION_NAME);
     }
 }

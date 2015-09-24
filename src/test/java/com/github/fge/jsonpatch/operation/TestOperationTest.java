@@ -27,6 +27,6 @@ public final class TestOperationTest
     public TestOperationTest()
         throws IOException
     {
-        super(new TestOperationFactory());
+        super(TestOperation.OPERATION_NAME);
     }
 }

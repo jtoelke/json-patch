@@ -27,6 +27,6 @@ public final class ReplaceOperationTest
     public ReplaceOperationTest()
         throws IOException
     {
-        super(new ReplaceOperationFactory());
+        super(ReplaceOperation.OPERATION_NAME);
     }
 }

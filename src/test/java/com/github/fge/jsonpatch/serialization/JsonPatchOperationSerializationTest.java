@@ -21,12 +21,12 @@ package com.github.fge.jsonpatch.serialization;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.github.fge.jackson.JacksonUtils;
 import com.github.fge.jackson.JsonLoader;
 import com.github.fge.jackson.JsonNumEquals;
 import com.github.fge.jsonpatch.*;
-import com.github.fge.jsonpatch.operation.JsonPatchOperationFactory;
+import com.github.fge.jsonpatch.annotation.JsonPatchOperationTypeInfoAnnotations;
+import com.github.fge.jsonpatch.operation.JsonPatchOperation;
 import com.google.common.base.Equivalence;
 import com.google.common.collect.Lists;
 import org.testng.annotations.DataProvider;
@@ -46,18 +46,23 @@ public abstract class JsonPatchOperationSerializationTest
 
     private final JsonNode node;
     private final ObjectMapper mapper;
-    private final RegistryBasedJsonPatchFactory factory;
 
+    /**
+     * @param directoryName The directory name for the data provider JSON
+     * @param operationFactory The JsonPatchOperationFactory for the particular operation we want to test serialization
+     * @param mapperModules ObjectMapper Modules we want to register for this mapper
+     *                      (e.g. if we want to use a different deserializer for the extended JSON patch operations)
+     * @throws IOException
+     */
     protected JsonPatchOperationSerializationTest(final String directoryName,
-        final JsonPatchOperationFactory operationFactory)
+        final String operationName,
+        final Class<? extends JsonPatchOperationTypeInfoAnnotations> typeInfoAnnotations)
         throws IOException
     {
-        final String resource = "/jsonpatch/" + directoryName + "/" + operationFactory.getOperationName() + ".json";
+        final String resource = "/jsonpatch/" + directoryName + "/" + operationName + ".json";
         node = JsonLoader.fromResource(resource);
         mapper = JacksonUtils.newMapper();
-        factory = (new RegistryBasedJsonPatchFactory.Builder())
-                .addOperation(operationFactory)
-                .build();
+        mapper.addMixInAnnotations(JsonPatchOperation.class, typeInfoAnnotations);
     }
 
     @DataProvider
@@ -78,8 +83,12 @@ public abstract class JsonPatchOperationSerializationTest
     public final void patchOperationSerializationWorks(final JsonNode input)
         throws IOException, JsonPatchException
     {
-        ArrayNode patchWithOpNode = JacksonUtils.nodeFactory().arrayNode().add(input);
-        final JsonPatch patchWithOp = factory.fromJson(patchWithOpNode);
+        /*
+         * Deserialize a string input
+         */
+        JsonNode patchWithOpNode = JacksonUtils.nodeFactory().arrayNode().add(input);
+        String in = patchWithOpNode.toString();
+        final JsonPatch patchWithOp = mapper.readValue(in, JsonPatch.class);
 
         /*
          * Now, write the operation as a String...

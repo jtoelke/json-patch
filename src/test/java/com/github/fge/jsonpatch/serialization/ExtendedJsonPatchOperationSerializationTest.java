@@ -1,6 +1,6 @@
 package com.github.fge.jsonpatch.serialization;
 
-import com.github.fge.jsonpatch.operation.JsonPatchOperationFactory;
+import com.github.fge.jsonpatch.annotation.ExtendedJsonPatchOperationTypeInfoAnnotations;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -8,10 +8,10 @@ import java.io.IOException;
 @Test
 public abstract class ExtendedJsonPatchOperationSerializationTest extends JsonPatchOperationSerializationTest
 {
-    protected ExtendedJsonPatchOperationSerializationTest(final JsonPatchOperationFactory operationFactory)
+    protected ExtendedJsonPatchOperationSerializationTest(final String operationName)
         throws IOException
     {
-        super("extended", operationFactory);
+        super("extended", operationName, ExtendedJsonPatchOperationTypeInfoAnnotations.class);
     }
 }
 

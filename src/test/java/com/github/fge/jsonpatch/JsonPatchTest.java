@@ -30,6 +30,8 @@ import org.mockito.ArgumentCaptor;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+
 import static org.mockito.Mockito.*;
 import static org.testng.Assert.*;
 
@@ -52,7 +54,7 @@ public final class JsonPatchTest
 
     @Test
     public void nullInputsDuringBuildAreRejected()
-        throws JsonPatchException
+        throws IOException
     {
         try {
             JsonPatch.fromJson(null);

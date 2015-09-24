@@ -27,6 +27,6 @@ public final class CopyOperationTest
     public CopyOperationTest()
         throws IOException
     {
-        super(new CopyOperationFactory());
+        super(CopyOperation.OPERATION_NAME);
     }
 }

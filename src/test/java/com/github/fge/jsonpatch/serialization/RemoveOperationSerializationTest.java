@@ -19,7 +19,7 @@
 
 package com.github.fge.jsonpatch.serialization;
 
-import com.github.fge.jsonpatch.operation.RemoveOperationFactory;
+import com.github.fge.jsonpatch.operation.RemoveOperation;
 
 import java.io.IOException;
 
@@ -29,6 +29,6 @@ public final class RemoveOperationSerializationTest
     public RemoveOperationSerializationTest()
         throws IOException
     {
-        super(new RemoveOperationFactory());
+        super(RemoveOperation.OPERATION_NAME);
     }
 }

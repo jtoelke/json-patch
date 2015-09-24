@@ -4,10 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.github.fge.jackson.JacksonUtils;
 import com.github.fge.jackson.jsonpointer.JsonPointer;
 import com.github.fge.jsonpatch.JsonPatchException;
-import com.github.fge.jsonpatch.operation.ExtendedJsonPatchOperationTest;
-import com.github.fge.jsonpatch.operation.JsonPatchOperation;
-import com.github.fge.jsonpatch.operation.OmitOptionalOperation;
-import com.github.fge.jsonpatch.operation.OmitOptionalOperationFactory;
 import com.google.common.collect.Lists;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -23,7 +19,7 @@ public final class OmitOptionalOperationTest extends ExtendedJsonPatchOperationT
     public OmitOptionalOperationTest()
             throws IOException
     {
-        super(new OmitOptionalOperationFactory());
+        super(OmitOptionalOperation.OPERATION_NAME);
     }
 
     @DataProvider

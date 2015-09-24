@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.JsonSerializable;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
+import com.github.fge.jackson.JacksonUtils;
 import com.github.fge.jsonpatch.operation.JsonPatchOperation;
 import com.github.fge.msgsimple.bundle.MessageBundle;
 import com.github.fge.msgsimple.load.MessageBundles;
@@ -119,14 +120,15 @@ public final class JsonPatch
      *
      * @param node the JSON representation of the generated JSON Patch
      * @return a JSON Patch
-     * @throws JsonPatchException input is not a valid JSON patch
+     * @throws IOException input is not a valid JSON patch
      * @throws NullPointerException input is null
      */
     public static JsonPatch fromJson(final JsonNode node)
-            throws JsonPatchException
+            throws IOException
     {
         BUNDLE.checkNotNull(node, "jsonPatch.nullInput");
-        return JsonPatchFactoryUtil.defaultFactory().fromJson(node);
+        return JacksonUtils.getReader().withType(JsonPatch.class)
+            .readValue(node);
     }
 
     /**
