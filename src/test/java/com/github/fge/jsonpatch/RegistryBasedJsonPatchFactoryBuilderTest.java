@@ -1,5 +1,6 @@
 package com.github.fge.jsonpatch;
 
+import com.github.fge.jsonpatch.operation.AddOperationFactory;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;

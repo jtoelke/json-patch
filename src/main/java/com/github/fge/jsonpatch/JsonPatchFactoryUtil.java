@@ -1,5 +1,7 @@
 package com.github.fge.jsonpatch;
 
+import com.github.fge.jsonpatch.operation.*;
+
 import java.util.*;
 
 /**
@@ -23,6 +25,7 @@ public final class JsonPatchFactoryUtil
         Collections.unmodifiableList(
             new ArrayList<JsonPatchOperationFactory>() {{
                 add(new OmitOperationFactory());
+                add(new OmitOptionalOperationFactory());
             }}
         );
     private static final JsonPatchFactory DEFAULT_FACTORY =

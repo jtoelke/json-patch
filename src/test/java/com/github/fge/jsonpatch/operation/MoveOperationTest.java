@@ -17,16 +17,14 @@
  * - ASL 2.0: http://www.apache.org/licenses/LICENSE-2.0.txt
  */
 
-package com.github.fge.jsonpatch.serialization;
-
-import com.github.fge.jsonpatch.operation.MoveOperationFactory;
+package com.github.fge.jsonpatch.operation;
 
 import java.io.IOException;
 
-public final class MoveOperationSerializationTest
-    extends StandardJsonPatchOperationSerializationTest
+public final class MoveOperationTest
+    extends StandardJsonPatchOperationTest
 {
-    public MoveOperationSerializationTest()
+    public MoveOperationTest()
         throws IOException
     {
         super(new MoveOperationFactory());

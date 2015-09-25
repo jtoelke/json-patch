@@ -19,7 +19,7 @@
 
 package com.github.fge.jsonpatch.serialization;
 
-import com.github.fge.jsonpatch.CopyOperationFactory;
+import com.github.fge.jsonpatch.operation.CopyOperationFactory;
 
 import java.io.IOException;
 

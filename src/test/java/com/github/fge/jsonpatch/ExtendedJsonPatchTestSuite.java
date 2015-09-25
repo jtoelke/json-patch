@@ -1,8 +1,11 @@
 package com.github.fge.jsonpatch;
 
+import com.github.fge.jsonpatch.operation.JsonPatchOperationFactory;
+import com.github.fge.jsonpatch.operation.OmitOperationFactory;
+import com.github.fge.jsonpatch.operation.OmitOptionalOperationFactory;
+
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public final class ExtendedJsonPatchTestSuite extends JsonPatchTestSuite
 {
@@ -15,6 +18,7 @@ public final class ExtendedJsonPatchTestSuite extends JsonPatchTestSuite
     {
         ArrayList<JsonPatchOperationFactory> additionalOperations = new ArrayList<JsonPatchOperationFactory>();
         additionalOperations.add(new OmitOperationFactory());
+        additionalOperations.add(new OmitOptionalOperationFactory());
         return additionalOperations;
     }
 }

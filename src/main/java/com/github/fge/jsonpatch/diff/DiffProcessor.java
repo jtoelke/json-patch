@@ -23,7 +23,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.github.fge.jackson.JsonNumEquals;
 import com.github.fge.jackson.jsonpointer.JsonPointer;
 import com.github.fge.jsonpatch.JsonPatch;
-import com.github.fge.jsonpatch.JsonPatchOperation;
+import com.github.fge.jsonpatch.operation.JsonPatchOperation;
 import com.google.common.base.Equivalence;
 import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableMap;
