@@ -25,9 +25,9 @@ import com.fasterxml.jackson.databind.ObjectReader;
 import com.github.fge.jackson.JacksonUtils;
 import com.github.fge.jackson.JsonLoader;
 import com.github.fge.jackson.JsonNumEquals;
+import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
 import com.github.fge.jsonpatch.JsonPatchMessages;
-import com.github.fge.jsonpatch.annotation.JsonPatchOperationTypeInfoAnnotations;
 import com.github.fge.msgsimple.bundle.MessageBundle;
 import com.github.fge.msgsimple.load.MessageBundles;
 import com.google.common.base.Equivalence;
@@ -56,7 +56,7 @@ public abstract class JsonPatchOperationTest
 
     protected JsonPatchOperationTest(final String directoryName,
             final String operationName,
-            final Class<? extends JsonPatchOperationTypeInfoAnnotations> typeInfoAnnotations)
+            final Class<? extends JsonPatchOperation> jsonPatchOperationClass)
         throws IOException
     {
         final String resource = "/jsonpatch/" + directoryName + "/" + operationName + ".json";
@@ -64,8 +64,7 @@ public abstract class JsonPatchOperationTest
         errors = node.get("errors");
         ops = node.get("ops");
         ObjectMapper mapper = JacksonUtils.newMapper();
-        mapper.addMixInAnnotations(JsonPatchOperation.class, typeInfoAnnotations);
-        reader = mapper.reader().withType(JsonPatchOperation.class);
+        reader = mapper.reader().withType(jsonPatchOperationClass);
     }
 
     @DataProvider

@@ -15,7 +15,7 @@ import com.google.common.collect.Iterables;
  * OmitOperationBase implements the basic concept of omitting the specified value at the
  * requested path.
  */
-public abstract class OmitOperationBase extends PathValueOperation
+public abstract class OmitOperationBase extends PathValueOperation implements ExtendedJsonPatchOperation
 {
     private static final Equivalence<JsonNode> EQUIVALENCE
         = JsonNumEquals.getInstance();

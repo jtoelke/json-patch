@@ -1,8 +1,8 @@
-package com.github.fge.jsonpatch.annotation;
+package com.github.fge.jsonpatch.operation;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.github.fge.jsonpatch.operation.*;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "op")
 
@@ -16,5 +16,8 @@ import com.github.fge.jsonpatch.operation.*;
     @JsonSubTypes.Type(name = OmitOperation.OPERATION_NAME, value = OmitOperation.class),
     @JsonSubTypes.Type(name = OmitOptionalOperation.OPERATION_NAME, value = OmitOptionalOperation.class)
 })
-public class ExtendedJsonPatchOperationTypeInfoAnnotations implements JsonPatchOperationTypeInfoAnnotations {
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public interface ExtendedJsonPatchOperation extends JsonPatchOperation
+{
 }

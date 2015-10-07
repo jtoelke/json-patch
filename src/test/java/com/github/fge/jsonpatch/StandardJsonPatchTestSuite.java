@@ -1,6 +1,6 @@
 package com.github.fge.jsonpatch;
 
-import com.github.fge.jsonpatch.annotation.StandardJsonPatchOperationTypeInfoAnnotations;
+import com.github.fge.jsonpatch.operation.JsonPatchOperation;
 
 import java.io.IOException;
 
@@ -9,7 +9,7 @@ public final class StandardJsonPatchTestSuite extends JsonPatchTestSuite
     public StandardJsonPatchTestSuite()
         throws IOException
     {
-        super("standard", StandardJsonPatchOperationTypeInfoAnnotations.class);
+        super("standard", JsonPatch.class);
     }
 }
 

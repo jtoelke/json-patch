@@ -1,6 +1,6 @@
 package com.github.fge.jsonpatch.serialization;
 
-import com.github.fge.jsonpatch.annotation.StandardJsonPatchOperationTypeInfoAnnotations;
+import com.github.fge.jsonpatch.JsonPatch;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -11,6 +11,6 @@ public abstract class StandardJsonPatchOperationSerializationTest extends JsonPa
     protected StandardJsonPatchOperationSerializationTest(final String operationName)
         throws IOException
     {
-        super("standard", operationName, StandardJsonPatchOperationTypeInfoAnnotations.class);
+        super("standard", operationName, JsonPatch.class);
     }
 }

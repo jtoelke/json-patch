@@ -26,7 +26,7 @@ import com.fasterxml.jackson.databind.JsonSerializable;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 import com.github.fge.jackson.JacksonUtils;
-import com.github.fge.jsonpatch.operation.JsonPatchOperation;
+import com.github.fge.jsonpatch.operation.*;
 import com.github.fge.msgsimple.bundle.MessageBundle;
 import com.github.fge.msgsimple.load.MessageBundles;
 import com.google.common.collect.ImmutableList;
@@ -90,10 +90,10 @@ import java.util.List;
  * <p><b>IMPORTANT NOTE:</b> the JSON Patch is supposed to be VALID when the
  * constructor for this class ({@link JsonPatch#fromJson(JsonNode)} is used.</p>
  */
-public final class JsonPatch
+public class JsonPatch
     implements JsonSerializable
 {
-    private static final MessageBundle BUNDLE
+    protected static final MessageBundle BUNDLE
         = MessageBundles.getBundle(JsonPatchMessages.class);
 
     /**
@@ -110,7 +110,7 @@ public final class JsonPatch
      * @see JsonPatchOperation
      */
     @JsonCreator
-    public JsonPatch(final List<JsonPatchOperation> operations)
+    public JsonPatch(final List<? extends JsonPatchOperation> operations)
     {
         this.operations = ImmutableList.copyOf(operations);
     }

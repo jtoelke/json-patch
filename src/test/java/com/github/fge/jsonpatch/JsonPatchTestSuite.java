@@ -24,7 +24,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.github.fge.jackson.JacksonUtils;
 import com.github.fge.jackson.JsonLoader;
-import com.github.fge.jsonpatch.annotation.JsonPatchOperationTypeInfoAnnotations;
 import com.github.fge.jsonpatch.operation.JsonPatchOperation;
 import com.google.common.collect.Lists;
 import org.testng.annotations.DataProvider;
@@ -43,13 +42,12 @@ public abstract class JsonPatchTestSuite
     private final ObjectReader reader;
 
     public JsonPatchTestSuite(final String directory,
-          final Class<? extends JsonPatchOperationTypeInfoAnnotations> typeInfoAnnotations)
+          final Class<? extends JsonPatch> jsonPatchClass)
         throws IOException
     {
         testNode = JsonLoader.fromResource("/jsonpatch/" + directory + "/testsuite.json");
         ObjectMapper mapper = JacksonUtils.newMapper();
-        mapper.addMixInAnnotations(JsonPatchOperation.class, typeInfoAnnotations);
-        reader = mapper.reader().withType(JsonPatchOperation.class);
+        reader = mapper.reader().withType(jsonPatchClass);
     }
 
     @DataProvider

@@ -25,7 +25,6 @@ import com.github.fge.jackson.JacksonUtils;
 import com.github.fge.jackson.JsonLoader;
 import com.github.fge.jackson.JsonNumEquals;
 import com.github.fge.jsonpatch.*;
-import com.github.fge.jsonpatch.annotation.JsonPatchOperationTypeInfoAnnotations;
 import com.github.fge.jsonpatch.operation.JsonPatchOperation;
 import com.google.common.base.Equivalence;
 import com.google.common.collect.Lists;
@@ -46,6 +45,7 @@ public abstract class JsonPatchOperationSerializationTest
 
     private final JsonNode node;
     private final ObjectMapper mapper;
+    private final Class<? extends JsonPatch> jsonPatchClass;
 
     /**
      * @param directoryName The directory name for the data provider JSON
@@ -56,13 +56,13 @@ public abstract class JsonPatchOperationSerializationTest
      */
     protected JsonPatchOperationSerializationTest(final String directoryName,
         final String operationName,
-        final Class<? extends JsonPatchOperationTypeInfoAnnotations> typeInfoAnnotations)
+        final Class<? extends JsonPatch> jsonPatchClass)
         throws IOException
     {
         final String resource = "/jsonpatch/" + directoryName + "/" + operationName + ".json";
         node = JsonLoader.fromResource(resource);
         mapper = JacksonUtils.newMapper();
-        mapper.addMixInAnnotations(JsonPatchOperation.class, typeInfoAnnotations);
+        this.jsonPatchClass = jsonPatchClass;
     }
 
     @DataProvider
@@ -88,7 +88,7 @@ public abstract class JsonPatchOperationSerializationTest
          */
         JsonNode patchWithOpNode = JacksonUtils.nodeFactory().arrayNode().add(input);
         String in = patchWithOpNode.toString();
-        final JsonPatch patchWithOp = mapper.readValue(in, JsonPatch.class);
+        final JsonPatch patchWithOp = mapper.readValue(in, jsonPatchClass);
 
         /*
          * Now, write the operation as a String...
