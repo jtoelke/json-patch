@@ -42,12 +42,11 @@ public abstract class JsonPatchTestSuite
     private final ObjectReader reader;
 
     public JsonPatchTestSuite(final String directory,
-          final Class<? extends JsonPatch> jsonPatchClass)
+          final ObjectReader reader)
         throws IOException
     {
         testNode = JsonLoader.fromResource("/jsonpatch/" + directory + "/testsuite.json");
-        ObjectMapper mapper = JacksonUtils.newMapper();
-        reader = mapper.reader().withType(jsonPatchClass);
+        this.reader = reader.withType(JsonPatch.class);
     }
 
     @DataProvider

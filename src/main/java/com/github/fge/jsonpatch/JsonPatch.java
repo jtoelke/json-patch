@@ -21,9 +21,8 @@ package com.github.fge.jsonpatch;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.JsonSerializable;
-import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.jsontype.NamedType;
 import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 import com.github.fge.jackson.JacksonUtils;
 import com.github.fge.jsonpatch.operation.*;
@@ -96,6 +95,30 @@ public class JsonPatch
     protected static final MessageBundle BUNDLE
         = MessageBundles.getBundle(JsonPatchMessages.class);
 
+    private static final ObjectMapper mapper;
+
+    static {
+        final ObjectMapper newMapper = JacksonUtils.newMapper();
+        newMapper.registerSubtypes(
+            new NamedType(AddOperation.class, AddOperation.OPERATION_NAME),
+            new NamedType(CopyOperation.class, CopyOperation.OPERATION_NAME),
+            new NamedType(MoveOperation.class, MoveOperation.OPERATION_NAME),
+            new NamedType(RemoveOperation.class, RemoveOperation.OPERATION_NAME),
+            new NamedType(ReplaceOperation.class, ReplaceOperation.OPERATION_NAME),
+            new NamedType(TestOperation.class, TestOperation.OPERATION_NAME)
+        );
+        mapper = newMapper;
+    }
+
+    public static ObjectReader getReader()
+    {
+        return mapper.reader();
+    }
+    public static ObjectWriter getWriter()
+    {
+        return mapper.writer();
+    }
+
     /**
      * List of operations
      */
@@ -110,7 +133,7 @@ public class JsonPatch
      * @see JsonPatchOperation
      */
     @JsonCreator
-    public JsonPatch(final List<? extends JsonPatchOperation> operations)
+    public JsonPatch(final List<JsonPatchOperation> operations)
     {
         this.operations = ImmutableList.copyOf(operations);
     }
@@ -127,7 +150,7 @@ public class JsonPatch
             throws IOException
     {
         BUNDLE.checkNotNull(node, "jsonPatch.nullInput");
-        return JacksonUtils.getReader().withType(JsonPatch.class)
+        return getReader().withType(JsonPatch.class)
             .readValue(node);
     }
 

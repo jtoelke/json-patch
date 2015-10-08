@@ -21,6 +21,8 @@ package com.github.fge.jsonpatch.serialization;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.github.fge.jackson.JacksonUtils;
 import com.github.fge.jackson.JsonLoader;
 import com.github.fge.jackson.JsonNumEquals;
@@ -44,8 +46,8 @@ public abstract class JsonPatchOperationSerializationTest
         = JsonNumEquals.getInstance();
 
     private final JsonNode node;
-    private final ObjectMapper mapper;
-    private final Class<? extends JsonPatch> jsonPatchClass;
+    private final ObjectReader reader;
+    private final ObjectWriter writer;
 
     /**
      * @param directoryName The directory name for the data provider JSON
@@ -56,13 +58,14 @@ public abstract class JsonPatchOperationSerializationTest
      */
     protected JsonPatchOperationSerializationTest(final String directoryName,
         final String operationName,
-        final Class<? extends JsonPatch> jsonPatchClass)
+        final ObjectReader reader,
+        final ObjectWriter writer)
         throws IOException
     {
         final String resource = "/jsonpatch/" + directoryName + "/" + operationName + ".json";
         node = JsonLoader.fromResource(resource);
-        mapper = JacksonUtils.newMapper();
-        this.jsonPatchClass = jsonPatchClass;
+        this.reader = reader;
+        this.writer = writer;
     }
 
     @DataProvider
@@ -88,12 +91,12 @@ public abstract class JsonPatchOperationSerializationTest
          */
         JsonNode patchWithOpNode = JacksonUtils.nodeFactory().arrayNode().add(input);
         String in = patchWithOpNode.toString();
-        final JsonPatch patchWithOp = mapper.readValue(in, jsonPatchClass);
+        final JsonPatch patchWithOp = reader.withType(JsonPatch.class).readValue(in);
 
         /*
          * Now, write the operation as a String...
          */
-        final String out = mapper.writeValueAsString(patchWithOp);
+        final String out = writer.writeValueAsString(patchWithOp);
 
         /*
          * And read it as a JsonNode again, then test for equality.
@@ -102,7 +105,7 @@ public abstract class JsonPatchOperationSerializationTest
          * object members; but JsonNode's .equals() method will correctly handle
          * this event, and we trust its .toString().
          */
-        final JsonNode output = JacksonUtils.getReader().readTree(out);
+        final JsonNode output = reader.readTree(out);
         assertTrue(EQUIVALENCE.equivalent(patchWithOpNode, output));
     }
 }

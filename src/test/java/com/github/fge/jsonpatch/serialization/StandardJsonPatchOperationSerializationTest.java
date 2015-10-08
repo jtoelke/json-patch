@@ -11,6 +11,6 @@ public abstract class StandardJsonPatchOperationSerializationTest extends JsonPa
     protected StandardJsonPatchOperationSerializationTest(final String operationName)
         throws IOException
     {
-        super("standard", operationName, JsonPatch.class);
+        super("standard", operationName, JsonPatch.getReader(), JsonPatch.getWriter());
     }
 }

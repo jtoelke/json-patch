@@ -9,7 +9,7 @@ public final class StandardJsonPatchTestSuite extends JsonPatchTestSuite
     public StandardJsonPatchTestSuite()
         throws IOException
     {
-        super("standard", JsonPatch.class);
+        super("standard", JsonPatch.getReader());
     }
 }
 

@@ -11,7 +11,7 @@ public abstract class ExtendedJsonPatchOperationSerializationTest extends JsonPa
     protected ExtendedJsonPatchOperationSerializationTest(final String operationName)
         throws IOException
     {
-        super("extended", operationName, ExtendedJsonPatch.class);
+        super("extended", operationName, ExtendedJsonPatch.getReader(), ExtendedJsonPatch.getWriter());
     }
 }
 

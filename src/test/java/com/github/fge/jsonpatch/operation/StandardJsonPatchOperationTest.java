@@ -1,5 +1,6 @@
 package com.github.fge.jsonpatch.operation;
 
+import com.github.fge.jsonpatch.JsonPatch;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -10,6 +11,6 @@ public abstract class StandardJsonPatchOperationTest extends JsonPatchOperationT
     protected StandardJsonPatchOperationTest(final String operationName)
         throws IOException
     {
-        super("standard", operationName, JsonPatchOperation.class);
+        super("standard", operationName, JsonPatch.getReader());
     }
 }

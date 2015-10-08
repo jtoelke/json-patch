@@ -56,15 +56,14 @@ public abstract class JsonPatchOperationTest
 
     protected JsonPatchOperationTest(final String directoryName,
             final String operationName,
-            final Class<? extends JsonPatchOperation> jsonPatchOperationClass)
+            final ObjectReader reader)
         throws IOException
     {
         final String resource = "/jsonpatch/" + directoryName + "/" + operationName + ".json";
         final JsonNode node = JsonLoader.fromResource(resource);
         errors = node.get("errors");
         ops = node.get("ops");
-        ObjectMapper mapper = JacksonUtils.newMapper();
-        reader = mapper.reader().withType(jsonPatchOperationClass);
+        this.reader = reader.withType(JsonPatchOperation.class);
     }
 
     @DataProvider
