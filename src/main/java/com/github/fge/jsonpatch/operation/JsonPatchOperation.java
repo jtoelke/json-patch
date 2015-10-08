@@ -25,8 +25,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.JsonSerializable;
 import com.github.fge.jsonpatch.JsonPatchException;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "op")
-
 /**
  * Base abstract class for one patch operation
  *
@@ -40,6 +38,9 @@ import com.github.fge.jsonpatch.JsonPatchException;
  *     argument ({@code add}, {@code replace} and {@code test}).</li>
  * </ul>
  */
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "op")
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public interface JsonPatchOperation
     extends JsonSerializable

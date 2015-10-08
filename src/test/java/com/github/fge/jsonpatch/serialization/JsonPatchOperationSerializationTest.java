@@ -27,7 +27,6 @@ import com.github.fge.jackson.JacksonUtils;
 import com.github.fge.jackson.JsonLoader;
 import com.github.fge.jackson.JsonNumEquals;
 import com.github.fge.jsonpatch.*;
-import com.github.fge.jsonpatch.operation.JsonPatchOperation;
 import com.google.common.base.Equivalence;
 import com.google.common.collect.Lists;
 import org.testng.annotations.DataProvider;

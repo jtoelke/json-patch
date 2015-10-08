@@ -20,7 +20,6 @@
 package com.github.fge.jsonpatch.operation;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.github.fge.jackson.JacksonUtils;
 import com.github.fge.jackson.JsonLoader;

@@ -92,31 +92,34 @@ import java.util.List;
 public class JsonPatch
     implements JsonSerializable
 {
-    protected static final MessageBundle BUNDLE
+    private static final MessageBundle BUNDLE
         = MessageBundles.getBundle(JsonPatchMessages.class);
 
-    private static final ObjectMapper mapper;
+    private static final ObjectMapper MAPPER;
+    private static final ObjectReader READER;
+    private static final ObjectWriter WRITER;
 
     static {
-        final ObjectMapper newMapper = JacksonUtils.newMapper();
-        newMapper.registerSubtypes(
-            new NamedType(AddOperation.class, AddOperation.OPERATION_NAME),
-            new NamedType(CopyOperation.class, CopyOperation.OPERATION_NAME),
-            new NamedType(MoveOperation.class, MoveOperation.OPERATION_NAME),
-            new NamedType(RemoveOperation.class, RemoveOperation.OPERATION_NAME),
-            new NamedType(ReplaceOperation.class, ReplaceOperation.OPERATION_NAME),
-            new NamedType(TestOperation.class, TestOperation.OPERATION_NAME)
+        MAPPER = JacksonUtils.newMapper();
+        MAPPER.registerSubtypes(
+                new NamedType(AddOperation.class, AddOperation.OPERATION_NAME),
+                new NamedType(CopyOperation.class, CopyOperation.OPERATION_NAME),
+                new NamedType(MoveOperation.class, MoveOperation.OPERATION_NAME),
+                new NamedType(RemoveOperation.class, RemoveOperation.OPERATION_NAME),
+                new NamedType(ReplaceOperation.class, ReplaceOperation.OPERATION_NAME),
+                new NamedType(TestOperation.class, TestOperation.OPERATION_NAME)
         );
-        mapper = newMapper;
+        READER = MAPPER.reader();
+        WRITER = MAPPER.writer();
     }
 
     public static ObjectReader getReader()
     {
-        return mapper.reader();
+        return READER;
     }
     public static ObjectWriter getWriter()
     {
-        return mapper.writer();
+        return WRITER;
     }
 
     /**

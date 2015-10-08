@@ -24,7 +24,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.github.fge.jackson.JacksonUtils;
 import com.github.fge.jackson.JsonLoader;
-import com.github.fge.jsonpatch.operation.JsonPatchOperation;
 import com.google.common.collect.Lists;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;

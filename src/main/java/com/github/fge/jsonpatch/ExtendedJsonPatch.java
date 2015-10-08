@@ -14,15 +14,17 @@ import java.io.IOException;
 
 public class ExtendedJsonPatch
 {
-    protected static final MessageBundle BUNDLE
+    private static final MessageBundle BUNDLE
         = MessageBundles.getBundle(JsonPatchMessages.class);
 
-    private static final ObjectMapper mapper;
+    private static final ObjectMapper MAPPER;
+    private static final ObjectReader READER;
+    private static final ObjectWriter WRITER;
 
     static
     {
-        final ObjectMapper newMapper = JacksonUtils.newMapper();
-        newMapper.registerSubtypes(
+        MAPPER = JacksonUtils.newMapper();
+        MAPPER.registerSubtypes(
                 new NamedType(AddOperation.class, AddOperation.OPERATION_NAME),
                 new NamedType(CopyOperation.class, CopyOperation.OPERATION_NAME),
                 new NamedType(MoveOperation.class, MoveOperation.OPERATION_NAME),
@@ -32,17 +34,18 @@ public class ExtendedJsonPatch
                 new NamedType(OmitOperation.class, OmitOperation.OPERATION_NAME),
                 new NamedType(OmitOptionalOperation.class, OmitOptionalOperation.OPERATION_NAME)
         );
-        mapper = newMapper;
+        READER = MAPPER.reader();
+        WRITER = MAPPER.writer();
     }
 
     public static ObjectReader getReader()
     {
-        return mapper.reader();
+        return READER;
     }
 
     public static ObjectWriter getWriter()
     {
-        return mapper.writer();
+        return WRITER;
     }
 
     /**
