@@ -57,14 +57,13 @@ public abstract class JsonPatchOperationSerializationTest
      */
     protected JsonPatchOperationSerializationTest(final String directoryName,
         final String operationName,
-        final ObjectReader reader,
-        final ObjectWriter writer)
+        final JsonPatchFactory factory)
         throws IOException
     {
         final String resource = "/jsonpatch/" + directoryName + "/" + operationName + ".json";
         node = JsonLoader.fromResource(resource);
-        this.reader = reader;
-        this.writer = writer;
+        reader = factory.getReader();
+        writer = factory.getWriter();
     }
 
     @DataProvider

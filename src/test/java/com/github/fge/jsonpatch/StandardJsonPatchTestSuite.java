@@ -7,7 +7,7 @@ public final class StandardJsonPatchTestSuite extends JsonPatchTestSuite
     public StandardJsonPatchTestSuite()
         throws IOException
     {
-        super("standard", JsonPatch.getReader());
+        super("standard", StandardJsonPatchFactory.create());
     }
 }
 

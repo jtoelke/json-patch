@@ -26,6 +26,7 @@ import com.github.fge.jackson.JsonLoader;
 import com.github.fge.jackson.JsonNumEquals;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
+import com.github.fge.jsonpatch.JsonPatchFactory;
 import com.github.fge.jsonpatch.JsonPatchMessages;
 import com.github.fge.msgsimple.bundle.MessageBundle;
 import com.github.fge.msgsimple.load.MessageBundles;
@@ -55,14 +56,14 @@ public abstract class JsonPatchOperationTest
 
     protected JsonPatchOperationTest(final String directoryName,
             final String operationName,
-            final ObjectReader reader)
+            final JsonPatchFactory factory)
         throws IOException
     {
         final String resource = "/jsonpatch/" + directoryName + "/" + operationName + ".json";
         final JsonNode node = JsonLoader.fromResource(resource);
         errors = node.get("errors");
         ops = node.get("ops");
-        this.reader = reader.withType(JsonPatchOperation.class);
+        reader = factory.getReader().withType(JsonPatchOperation.class);
     }
 
     @DataProvider

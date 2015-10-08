@@ -12,19 +12,15 @@ import com.github.fge.msgsimple.load.MessageBundles;
 
 import java.io.IOException;
 
-public class ExtendedJsonPatch
+/**
+ * ExtendedJsonPatchFactory can create a JsonPatchFactory configured to work with the extended set of JSON Patch operations.
+ */
+public class ExtendedJsonPatchFactory
 {
-    private static final MessageBundle BUNDLE
-        = MessageBundles.getBundle(JsonPatchMessages.class);
-
-    private static final ObjectMapper MAPPER;
-    private static final ObjectReader READER;
-    private static final ObjectWriter WRITER;
-
-    static
+    public static JsonPatchFactory create()
     {
-        MAPPER = JacksonUtils.newMapper();
-        MAPPER.registerSubtypes(
+        ObjectMapper mapper = JacksonUtils.newMapper();
+        mapper.registerSubtypes(
                 new NamedType(AddOperation.class, AddOperation.OPERATION_NAME),
                 new NamedType(CopyOperation.class, CopyOperation.OPERATION_NAME),
                 new NamedType(MoveOperation.class, MoveOperation.OPERATION_NAME),
@@ -34,33 +30,6 @@ public class ExtendedJsonPatch
                 new NamedType(OmitOperation.class, OmitOperation.OPERATION_NAME),
                 new NamedType(OmitOptionalOperation.class, OmitOptionalOperation.OPERATION_NAME)
         );
-        READER = MAPPER.reader();
-        WRITER = MAPPER.writer();
-    }
-
-    public static ObjectReader getReader()
-    {
-        return READER;
-    }
-
-    public static ObjectWriter getWriter()
-    {
-        return WRITER;
-    }
-
-    /**
-     * Static factory method to build a JSON Patch out of a JSON representation
-     *
-     * @param node the JSON representation of the generated JSON Patch
-     * @return a JSON Patch
-     * @throws IOException input is not a valid JSON patch
-     * @throws NullPointerException input is null
-     */
-    public static JsonPatch fromJson(final JsonNode node)
-            throws IOException
-    {
-        BUNDLE.checkNotNull(node, "jsonPatch.nullInput");
-        return getReader().withType(JsonPatch.class)
-            .readValue(node);
+        return new JsonPatchFactory(mapper);
     }
 }

@@ -24,7 +24,6 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.jsontype.NamedType;
 import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
-import com.github.fge.jackson.JacksonUtils;
 import com.github.fge.jsonpatch.operation.*;
 import com.github.fge.msgsimple.bundle.MessageBundle;
 import com.github.fge.msgsimple.load.MessageBundles;
@@ -95,32 +94,8 @@ public class JsonPatch
     private static final MessageBundle BUNDLE
         = MessageBundles.getBundle(JsonPatchMessages.class);
 
-    private static final ObjectMapper MAPPER;
-    private static final ObjectReader READER;
-    private static final ObjectWriter WRITER;
 
-    static {
-        MAPPER = JacksonUtils.newMapper();
-        MAPPER.registerSubtypes(
-                new NamedType(AddOperation.class, AddOperation.OPERATION_NAME),
-                new NamedType(CopyOperation.class, CopyOperation.OPERATION_NAME),
-                new NamedType(MoveOperation.class, MoveOperation.OPERATION_NAME),
-                new NamedType(RemoveOperation.class, RemoveOperation.OPERATION_NAME),
-                new NamedType(ReplaceOperation.class, ReplaceOperation.OPERATION_NAME),
-                new NamedType(TestOperation.class, TestOperation.OPERATION_NAME)
-        );
-        READER = MAPPER.reader();
-        WRITER = MAPPER.writer();
-    }
-
-    public static ObjectReader getReader()
-    {
-        return READER;
-    }
-    public static ObjectWriter getWriter()
-    {
-        return WRITER;
-    }
+    private static final JsonPatchFactory JSON_PATCH_FACTORY = StandardJsonPatchFactory.create();
 
     /**
      * List of operations
@@ -148,13 +123,15 @@ public class JsonPatch
      * @return a JSON Patch
      * @throws IOException input is not a valid JSON patch
      * @throws NullPointerException input is null
+     * @deprecated This uses a static StandardJsonPatchFactory to produce the JsonPatch. Use the appropriate
+     *             JsonPatchFactory instead.
      */
+    @Deprecated
     public static JsonPatch fromJson(final JsonNode node)
             throws IOException
     {
         BUNDLE.checkNotNull(node, "jsonPatch.nullInput");
-        return getReader().withType(JsonPatch.class)
-            .readValue(node);
+        return JSON_PATCH_FACTORY.fromJson(node);
     }
 
     /**

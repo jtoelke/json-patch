@@ -41,11 +41,11 @@ public abstract class JsonPatchTestSuite
     private final ObjectReader reader;
 
     public JsonPatchTestSuite(final String directory,
-          final ObjectReader reader)
+          final JsonPatchFactory factory)
         throws IOException
     {
         testNode = JsonLoader.fromResource("/jsonpatch/" + directory + "/testsuite.json");
-        this.reader = reader.withType(JsonPatch.class);
+        reader = factory.getReader().withType(JsonPatch.class);
     }
 
     @DataProvider
