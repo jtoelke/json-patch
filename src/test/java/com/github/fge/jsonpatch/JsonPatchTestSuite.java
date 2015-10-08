@@ -20,8 +20,10 @@
 package com.github.fge.jsonpatch;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
+import com.github.fge.jackson.JacksonUtils;
 import com.github.fge.jackson.JsonLoader;
-import com.github.fge.jsonpatch.operation.JsonPatchOperationFactory;
 import com.google.common.collect.Lists;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -36,22 +38,19 @@ import static org.testng.Assert.*;
 public abstract class JsonPatchTestSuite
 {
     private final JsonNode testNode;
-    private final RegistryBasedJsonPatchFactory factory;
+    private final ObjectReader reader;
 
-    public JsonPatchTestSuite(String directory,
-            List<JsonPatchOperationFactory> additionalOperations)
+    public JsonPatchTestSuite(final String directory,
+          final JsonPatchFactory factory)
         throws IOException
     {
         testNode = JsonLoader.fromResource("/jsonpatch/" + directory + "/testsuite.json");
-        factory = (new RegistryBasedJsonPatchFactory.Builder())
-                .addOperations(JsonPatchFactoryUtil.defaultOperations())
-                .addOperations(additionalOperations)
-                .build();
+        reader = factory.getReader().withType(JsonPatch.class);
     }
 
     @DataProvider
     public Iterator<Object[]> getTests()
-        throws JsonPatchException
+        throws IOException, JsonPatchException
     {
         final List<Object[]> list = Lists.newArrayList();
 
@@ -62,7 +61,7 @@ public abstract class JsonPatchTestSuite
         for (final JsonNode element: testNode) {
             if (!element.has("patch"))
                 continue;
-            patch = factory.fromJson(element.get("patch"));
+            patch = reader.readValue((element.get("patch")));
             source = element.get("doc");
             expected = element.get("expected");
             if (expected == null)

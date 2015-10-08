@@ -19,7 +19,7 @@
 
 package com.github.fge.jsonpatch.serialization;
 
-import com.github.fge.jsonpatch.operation.AddOperationFactory;
+import com.github.fge.jsonpatch.operation.AddOperation;
 
 import java.io.IOException;
 
@@ -29,6 +29,6 @@ public final class AddOperationSerializationTest
     public AddOperationSerializationTest()
         throws IOException
     {
-        super(new AddOperationFactory());
+        super(AddOperation.OPERATION_NAME);
     }
 }

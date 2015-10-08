@@ -35,7 +35,7 @@ public final class RemoveOperationTest
     public RemoveOperationTest()
         throws IOException
     {
-        super(new RemoveOperationFactory());
+        super(RemoveOperation.OPERATION_NAME);
     }
 
     @Test

@@ -1,7 +1,7 @@
 package com.github.fge.jsonpatch.operation;
 
-import com.github.fge.jsonpatch.operation.JsonPatchOperationFactory;
-import com.github.fge.jsonpatch.operation.JsonPatchOperationTest;
+import com.github.fge.jsonpatch.JsonPatch;
+import com.github.fge.jsonpatch.StandardJsonPatchFactory;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -9,9 +9,9 @@ import java.io.IOException;
 @Test
 public abstract class StandardJsonPatchOperationTest extends JsonPatchOperationTest
 {
-    protected StandardJsonPatchOperationTest(final JsonPatchOperationFactory operationFactory)
+    protected StandardJsonPatchOperationTest(final String operationName)
         throws IOException
     {
-        super("standard", operationFactory);
+        super("standard", operationName, StandardJsonPatchFactory.create());
     }
 }

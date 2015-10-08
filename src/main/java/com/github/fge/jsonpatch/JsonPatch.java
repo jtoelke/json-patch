@@ -21,11 +21,10 @@ package com.github.fge.jsonpatch;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.JsonSerializable;
-import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.jsontype.NamedType;
 import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
-import com.github.fge.jsonpatch.operation.JsonPatchOperation;
+import com.github.fge.jsonpatch.operation.*;
 import com.github.fge.msgsimple.bundle.MessageBundle;
 import com.github.fge.msgsimple.load.MessageBundles;
 import com.google.common.collect.ImmutableList;
@@ -89,11 +88,14 @@ import java.util.List;
  * <p><b>IMPORTANT NOTE:</b> the JSON Patch is supposed to be VALID when the
  * constructor for this class ({@link JsonPatch#fromJson(JsonNode)} is used.</p>
  */
-public final class JsonPatch
+public class JsonPatch
     implements JsonSerializable
 {
     private static final MessageBundle BUNDLE
         = MessageBundles.getBundle(JsonPatchMessages.class);
+
+
+    private static final JsonPatchFactory JSON_PATCH_FACTORY = StandardJsonPatchFactory.create();
 
     /**
      * List of operations
@@ -119,14 +121,17 @@ public final class JsonPatch
      *
      * @param node the JSON representation of the generated JSON Patch
      * @return a JSON Patch
-     * @throws JsonPatchException input is not a valid JSON patch
+     * @throws IOException input is not a valid JSON patch
      * @throws NullPointerException input is null
+     * @deprecated This uses a static StandardJsonPatchFactory to produce the JsonPatch. Use the appropriate
+     *             JsonPatchFactory instead.
      */
+    @Deprecated
     public static JsonPatch fromJson(final JsonNode node)
-            throws JsonPatchException
+            throws IOException
     {
         BUNDLE.checkNotNull(node, "jsonPatch.nullInput");
-        return JsonPatchFactoryUtil.defaultFactory().fromJson(node);
+        return JSON_PATCH_FACTORY.fromJson(node);
     }
 
     /**

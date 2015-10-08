@@ -20,15 +20,14 @@
 package com.github.fge.jsonpatch.operation;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.ObjectReader;
 import com.github.fge.jackson.JacksonUtils;
 import com.github.fge.jackson.JsonLoader;
 import com.github.fge.jackson.JsonNumEquals;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
+import com.github.fge.jsonpatch.JsonPatchFactory;
 import com.github.fge.jsonpatch.JsonPatchMessages;
-import com.github.fge.jsonpatch.RegistryBasedJsonPatchFactory;
-import com.github.fge.jsonpatch.operation.JsonPatchOperationFactory;
 import com.github.fge.msgsimple.bundle.MessageBundle;
 import com.github.fge.msgsimple.load.MessageBundles;
 import com.google.common.base.Equivalence;
@@ -53,19 +52,18 @@ public abstract class JsonPatchOperationTest
 
     private final JsonNode errors;
     private final JsonNode ops;
-    private final RegistryBasedJsonPatchFactory factory;
+    private final ObjectReader reader;
 
     protected JsonPatchOperationTest(final String directoryName,
-            final JsonPatchOperationFactory operationFactory)
+            final String operationName,
+            final JsonPatchFactory factory)
         throws IOException
     {
-        final String resource = "/jsonpatch/" + directoryName + "/" + operationFactory.getOperationName() + ".json";
+        final String resource = "/jsonpatch/" + directoryName + "/" + operationName + ".json";
         final JsonNode node = JsonLoader.fromResource(resource);
         errors = node.get("errors");
         ops = node.get("ops");
-        factory = (new RegistryBasedJsonPatchFactory.Builder())
-                .addOperation(operationFactory)
-                .build();
+        reader = factory.getReader().withType(JsonPatchOperation.class);
     }
 
     @DataProvider
@@ -87,13 +85,12 @@ public abstract class JsonPatchOperationTest
     @Test(dataProvider = "getErrors")
     public final void errorsAreCorrectlyReported(final JsonNode patch,
         final JsonNode node, final String message)
-        throws JsonPatchException
+        throws IOException, JsonPatchException
     {
-        ArrayNode patchWithOpNode = JacksonUtils.nodeFactory().arrayNode().add(patch);
-        final JsonPatch patchWithOp = factory.fromJson(patchWithOpNode);
+        final JsonPatchOperation op = reader.readValue(patch);
 
         try {
-            patchWithOp.apply(node);
+            op.apply(node);
             fail("No exception thrown!!");
         } catch (JsonPatchException e) {
             assertEquals(e.getMessage(), message);
@@ -118,11 +115,10 @@ public abstract class JsonPatchOperationTest
     @Test(dataProvider = "getOps")
     public final void operationsYieldExpectedResults(final JsonNode patch,
         final JsonNode node, final JsonNode expected)
-        throws JsonPatchException
+        throws IOException, JsonPatchException
     {
-        ArrayNode patchWithOpNode = JacksonUtils.nodeFactory().arrayNode().add(patch);
-        final JsonPatch patchWithOp = factory.fromJson(patchWithOpNode);
-        final JsonNode actual = patchWithOp.apply(node);
+        final JsonPatchOperation op = reader.readValue(patch);
+        final JsonNode actual = op.apply(node);
 
         assertTrue(EQUIVALENCE.equivalent(actual, expected),
             "patched node differs from expectations: expected " + expected

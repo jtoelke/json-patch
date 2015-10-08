@@ -1,6 +1,6 @@
 package com.github.fge.jsonpatch.serialization;
 
-import com.github.fge.jsonpatch.operation.OmitOperationFactory;
+import com.github.fge.jsonpatch.operation.OmitOperation;
 
 import java.io.IOException;
 
@@ -8,6 +8,6 @@ public final class OmitOperationSerializationTest extends ExtendedJsonPatchOpera
 {
     public OmitOperationSerializationTest() throws IOException
     {
-        super(new OmitOperationFactory());
+        super(OmitOperation.OPERATION_NAME);
     }
 }

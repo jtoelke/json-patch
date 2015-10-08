@@ -7,7 +7,6 @@ import com.github.fge.jsonpatch.JsonPatchException;
 import com.github.fge.jsonpatch.operation.ExtendedJsonPatchOperationTest;
 import com.github.fge.jsonpatch.operation.JsonPatchOperation;
 import com.github.fge.jsonpatch.operation.OmitOperation;
-import com.github.fge.jsonpatch.operation.OmitOperationFactory;
 import com.google.common.collect.Lists;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -23,7 +22,7 @@ public final class OmitOperationTest extends ExtendedJsonPatchOperationTest
     public OmitOperationTest()
        throws IOException
     {
-        super(new OmitOperationFactory());
+        super(OmitOperation.OPERATION_NAME);
     }
 
     @DataProvider
