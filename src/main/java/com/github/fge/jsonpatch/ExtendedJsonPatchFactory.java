@@ -28,7 +28,8 @@ public class ExtendedJsonPatchFactory
                 new NamedType(ReplaceOperation.class, ReplaceOperation.OPERATION_NAME),
                 new NamedType(TestOperation.class, TestOperation.OPERATION_NAME),
                 new NamedType(OmitOperation.class, OmitOperation.OPERATION_NAME),
-                new NamedType(OmitOptionalOperation.class, OmitOptionalOperation.OPERATION_NAME)
+                new NamedType(OmitOptionalOperation.class, OmitOptionalOperation.OPERATION_NAME),
+                new NamedType(TranslateOperation.class, TranslateOperation.OPERATION_NAME)
         );
         return new JsonPatchFactory(mapper);
     }
