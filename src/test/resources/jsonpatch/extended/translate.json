@@ -1,0 +1,71 @@
+{
+    "errors": [
+        {
+            "op": { "op": "translate", "path": "/x/y", "from": "baz", "value": "foo" },
+            "node": { "x": {} },
+            "message": "jsonPatch.noSuchPath"
+        },
+        {
+            "op": { "op": "translate", "path": "/x", "from": "baz", "value": "foo" },
+            "node": "notAnObject",
+            "message": "jsonPatch.noSuchPath"
+        },
+        {
+            "op": { "op": "translate", "path": "/", "from": "baz", "value": "notAnObject" },
+            "node": "notAnObject",
+            "message": "jsonPatch.noSuchPath"
+        }
+    ],
+    "ops": [
+        {
+            "op": { "op": "translate", "path": "/x/y", "from": {}, "value": "new value" },
+            "node": { "x": { "a": "b", "y": {} } },
+            "expected": { "x": { "a": "b", "y": "new value" } }
+        },
+        {
+            "op": { "op": "translate", "path": "/x/y", "from": {}, "value": null },
+            "node": { "x": { "a": "b", "y": {} } },
+            "expected": { "x": { "a": "b", "y": null } }
+        },
+        {
+            "op": { "op": "translate", "path": "/0/2", "from": "c", "value": "new value" },
+            "node": [ [ "a", "b", "c"], "d", "e" ],
+            "expected": [ [ "a", "b", "new value" ], "d", "e" ]
+        },
+        {
+            "op": { "op": "translate", "path": "/x/0", "from": "y", "value": "new value" },
+            "node": { "x": [ "y", "z" ], "foo": "bar" },
+            "expected": { "x": [ "new value", "z" ], "foo": "bar" }
+        },
+        {
+            "op": { "op": "translate", "path": "/x/y", "from": "notSameValue", "value": "new value" },
+            "node": { "x": { "a": "b", "y": {} } },
+            "expected": { "x": { "a": "b", "y": {} } }
+        },
+        {
+            "op": { "op": "translate", "path": "/0/2", "from": "notSameValue", "value": "new value" },
+            "node": [ [ "a", "b", "c"], "d", "e" ],
+            "expected": [ [ "a", "b", "c" ], "d", "e" ]
+        },
+        {
+            "op": { "op": "translate", "path": "/x/0", "from": "notSameValue", "value": "new value" },
+            "node": { "x": [ "y", "z" ], "foo": "bar" },
+            "expected": { "x": [ "y", "z" ], "foo": "bar" }
+        },
+        {
+            "op": { "op": "translate", "path": "", "from": "notSameValue", "value": "new value" },
+            "node": { "x": [ "y", "z" ], "foo": "bar" },
+            "expected": { "x": [ "y", "z" ], "foo": "bar" }
+        },
+        {
+            "op": { "op": "translate", "path": "", "from": "notSameValue", "value": "new value" },
+            "node": "notAnObject",
+            "expected": "notAnObject"
+        },
+        {
+            "op": { "op": "translate", "path": "/", "from": "y", "value": "new value" },
+            "node": { "": "y", "x": "z" },
+            "expected": { "": "new value", "x": "z" }
+        }
+    ]
+}

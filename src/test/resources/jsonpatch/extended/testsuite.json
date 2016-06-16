@@ -11,6 +11,12 @@
         "patch": [{"op": "omit?", "path": "/foo", "value": "bar"}],
         "expected": {}
     },
+  {
+        "comment": "trasnlate operation is able to be parsed and applied",
+        "doc": {"foo": "bar"},
+        "patch": [{"op": "trasnlate", "path": "/foo", "from": "bar", "value": "qux"}],
+        "expected": {"foo": "qux"}
+    },
     {
         "comment": "tests done"
     }

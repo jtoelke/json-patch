@@ -39,7 +39,6 @@ import java.io.IOException;
 public abstract class PathDualValueOperation
     implements JsonPatchOperation
 {
-    // TODO(eugene): what is this?
     protected static final MessageBundle BUNDLE
         = MessageBundles.getBundle(JsonPatchMessages.class);
 
