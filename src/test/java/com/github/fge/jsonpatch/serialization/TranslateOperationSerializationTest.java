@@ -1,6 +1,6 @@
 package com.github.fge.jsonpatch.serialization;
 
-import com.github.fge.jsonpatch.operation.OmitOperation;
+import com.github.fge.jsonpatch.operation.TranslateOperation;
 
 import java.io.IOException;
 
@@ -8,6 +8,6 @@ public final class TranslateOperationSerializationTest extends ExtendedJsonPatch
 {
     public TranslateOperationSerializationTest() throws IOException
     {
-        super(OmitOperation.OPERATION_NAME);
+        super(TranslateOperation.OPERATION_NAME);
     }
 }

@@ -46,7 +46,7 @@ public final class TranslateOperationTest extends ExtendedJsonPatchOperationTest
     }
 
     @Test(dataProvider = "getNodesForMissingNodeTest")
-    public void omittingRootWithMatchingValueReturnsMissingNode(JsonNode node)
+    public void translatingRootWithMatchingValueReturnsMissingNode(JsonNode node)
         throws JsonPatchException
     {
         final JsonNode toValue = JacksonUtils.nodeFactory().textNode("the toValue");
