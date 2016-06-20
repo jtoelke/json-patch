@@ -46,12 +46,12 @@ public final class TranslateOperationTest extends ExtendedJsonPatchOperationTest
     }
 
     @Test(dataProvider = "getNodesForMissingNodeTest")
-    public void translatingRootWithMatchingValueReturnsMissingNode(JsonNode node)
+    public void translatingRootWithMatchingValueReturnstoValueNode(JsonNode node)
         throws JsonPatchException
     {
         final JsonNode toValue = JacksonUtils.nodeFactory().textNode("the toValue");
         final JsonPatchOperation op = new TranslateOperation(JsonPointer.empty(), node, toValue);
         final JsonNode ret = op.apply(node);
-        assertTrue(ret.isMissingNode());
+        assertEquals(ret, toValue);
     }
 }

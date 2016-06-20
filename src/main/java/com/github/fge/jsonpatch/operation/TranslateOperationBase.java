@@ -37,9 +37,10 @@ public abstract class TranslateOperationBase extends PathDualValueOperation
         throws JsonPatchException
     {
         final JsonNode ret = node.deepCopy();
+        final JsonNode toValueRet = toValue.deepCopy();
         if (path.isEmpty()) {
             if (EQUIVALENCE.equivalent(ret, fromValue)) {
-                return MissingNode.getInstance();
+                return toValueRet;
             } else {
                 return ret;
             }
@@ -59,9 +60,9 @@ public abstract class TranslateOperationBase extends PathDualValueOperation
             final JsonNode parent = path.parent().get(ret);
             final String rawToken = Iterables.getLast(path).getToken().getRaw();
             if (parent.isObject())
-                ((ObjectNode) parent).set(rawToken, toValue);
+                ((ObjectNode) parent).set(rawToken, toValueRet);
             else
-                ((ArrayNode) parent).set(Integer.parseInt(rawToken), toValue);
+                ((ArrayNode) parent).set(Integer.parseInt(rawToken), toValueRet);
         }
         return ret;
     }
