@@ -11,7 +11,7 @@ import com.github.fge.jsonpatch.operation.policy.PathMissingPolicy;
  *
  * The operation will translate a {@code fromValue} to a {@code toValue} at {@code path} if it exists.
  * It will do nothing if the actual value at {@code path} is not equal to {@code fromValue}.
- * It will no nothing if there is no value at {@code path}.
+ * It will do nothing if there is no value at {@code path}.
  */
 public final class TranslateOptionalOperation extends TranslateOperationBase
 {

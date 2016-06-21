@@ -53,6 +53,36 @@
             "expected": { "x": [ "y", "z" ], "foo": "bar" }
         },
         {
+            "op": { "op": "translate", "path": "", "from": {}, "value": "new value" },
+            "node": {},
+            "expected": "new value"
+        },
+        {
+            "op": { "op": "translate", "path": "", "from": {"foo": "bar"}, "value": "new value" },
+            "node": {"foo": "bar"},
+            "expected": "new value"
+        },
+        {
+            "op": { "op": "translate", "path": "", "from": ["foo"], "value": "new value" },
+            "node": ["foo"],
+            "expected": "new value"
+        },
+        {
+            "op": { "op": "translate", "path": "", "from": null, "value": "new value" },
+            "node": null,
+            "expected": "new value"
+        },
+        {
+            "op": { "op": "translate", "path": "", "from": "foo", "value": "new value" },
+            "node": "foo",
+            "expected": "new value"
+        },
+        {
+            "op": { "op": "translate", "path": "", "from": 123, "value": "new value" },
+            "node": 123,
+            "expected": "new value"
+        },
+        {
             "op": { "op": "translate", "path": "", "from": "notSameValue", "value": "new value" },
             "node": { "x": [ "y", "z" ], "foo": "bar" },
             "expected": { "x": [ "y", "z" ], "foo": "bar" }
