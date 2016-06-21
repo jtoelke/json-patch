@@ -1,8 +1,5 @@
-# This project is looking for a new maintainer
-
-I don't have the time, and worse, the incentive, to maintain this project anymore.
-
-If you are interested in taking over, please [contact me personally](mailto:fgaliegue@gmail.com).
+# We are maintaining this fork until fge returns 
+As fge hasn't been around on his fork, we are accepting pull requests here and publishing to net.box.json-patch.  If a point comes when fge returns we will try to get any patchset accepted here merged back into his branch.
 
 ## Read me first
 
