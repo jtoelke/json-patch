@@ -1,3 +1,16 @@
+## 1.12
+
+* Introduce "omit?" operation
+* Refactor json-patch factories
+
+## 1.11
+
+* Introduce "omit" operation
+
+## 1.10
+
+* Update build files
+
 ## 1.9
 
 * Completely new JSON diff implementation; less smart than the previous one but
