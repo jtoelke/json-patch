@@ -1,3 +1,7 @@
+## 1.13
+
+* Introduce "translate" and "translate?" operations
+
 ## 1.12
 
 * Introduce "omit?" operation
