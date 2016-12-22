@@ -1,5 +1,4 @@
 /*
- * Copyright (c) 2014, Francis Galiegue (fgaliegue@gmail.com)
  * Copyright (c) 2016, Jessica Beller (jbeller@box.com)
  *
  * This software is dual-licensed under:
@@ -27,19 +26,18 @@ import com.github.fge.jackson.jsonpointer.JsonPointer;
 import com.github.fge.jsonpatch.operation.policy.PathMissingPolicy;
 
 /**
- * JSON Path {@code remove} operation
+ * JSON Path {@code remove?} operation
  *
- * <p>This operation only takes one pointer ({@code path}) as an argument. It
- * is an error condition if no JSON value exists at that pointer.</p>
+ * <p>This operation will remove ({@code path}) if it exists.</p>
  */
-public final class RemoveOperation extends RemoveOperationBase
+public final class RemoveOptionalOperation extends RemoveOperationBase
 {
-    public static final String OPERATION_NAME = "remove";
+    public static final String OPERATION_NAME = "remove?";
 
     @JsonCreator
-    public RemoveOperation(@JsonProperty("path") final JsonPointer path)
+    public RemoveOptionalOperation(@JsonProperty("path") final JsonPointer path)
     {
-        super(OPERATION_NAME, path, PathMissingPolicy.THROW);
+        super(OPERATION_NAME, path, PathMissingPolicy.SKIP);
     }
 
 }

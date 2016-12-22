@@ -25,6 +25,7 @@ public class ExtendedJsonPatchFactory
                 new NamedType(CopyOperation.class, CopyOperation.OPERATION_NAME),
                 new NamedType(MoveOperation.class, MoveOperation.OPERATION_NAME),
                 new NamedType(RemoveOperation.class, RemoveOperation.OPERATION_NAME),
+                new NamedType(RemoveOptionalOperation.class, RemoveOptionalOperation.OPERATION_NAME),
                 new NamedType(ReplaceOperation.class, ReplaceOperation.OPERATION_NAME),
                 new NamedType(TestOperation.class, TestOperation.OPERATION_NAME),
                 new NamedType(OmitOperation.class, OmitOperation.OPERATION_NAME),

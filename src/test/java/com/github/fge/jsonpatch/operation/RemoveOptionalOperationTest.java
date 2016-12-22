@@ -1,5 +1,4 @@
 /*
- * Copyright (c) 2014, Francis Galiegue (fgaliegue@gmail.com)
  * Copyright (c) 2016, Jessica Beller (jbeller@box.com)
  *
  * This software is dual-licensed under:
@@ -20,26 +19,32 @@
 
 package com.github.fge.jsonpatch.operation;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.github.fge.jackson.JacksonUtils;
 import com.github.fge.jackson.jsonpointer.JsonPointer;
-import com.github.fge.jsonpatch.operation.policy.PathMissingPolicy;
+import com.github.fge.jsonpatch.JsonPatchException;
+import org.testng.annotations.Test;
 
-/**
- * JSON Path {@code remove} operation
- *
- * <p>This operation only takes one pointer ({@code path}) as an argument. It
- * is an error condition if no JSON value exists at that pointer.</p>
- */
-public final class RemoveOperation extends RemoveOperationBase
+import java.io.IOException;
+
+import static org.testng.Assert.*;
+
+public final class RemoveOptionalOperationTest
+    extends ExtendedJsonPatchOperationTest
 {
-    public static final String OPERATION_NAME = "remove";
-
-    @JsonCreator
-    public RemoveOperation(@JsonProperty("path") final JsonPointer path)
+    public RemoveOptionalOperationTest()
+        throws IOException
     {
-        super(OPERATION_NAME, path, PathMissingPolicy.THROW);
+        super(RemoveOptionalOperation.OPERATION_NAME);
     }
 
+    @Test
+    public void removingRootReturnsMissingNode()
+        throws JsonPatchException
+    {
+        final JsonNode node = JacksonUtils.nodeFactory().nullNode();
+        final JsonPatchOperation op = new RemoveOptionalOperation(JsonPointer.empty());
+        final JsonNode ret = op.apply(node);
+        assertTrue(ret.isMissingNode());
+    }
 }
