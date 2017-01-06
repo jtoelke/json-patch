@@ -1,3 +1,7 @@
+## 1.15
+
+* Introduce "move?" operation
+
 ## 1.14
 
 * Introduce "remove?" operation
