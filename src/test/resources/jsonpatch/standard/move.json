@@ -9,6 +9,26 @@
             "op": { "op": "move", "from": "/a", "path": "/b/c" },
             "node": { "a": "b" },
             "message": "jsonPatch.noSuchParent"
+        },
+        {
+            "op": { "op": "move", "from": "/a", "path": "/b/~1" },
+            "node": { "a": "x", "b": [] },
+            "message": "jsonPatch.notAnIndex"
+        },
+        {
+            "op": { "op": "move", "from": "/1", "path": "/3" },
+            "node": [ 1, 2 ],
+            "message": "jsonPatch.noSuchIndex"
+        },
+        {
+            "op": { "op": "move", "from": "/1", "path": "/-2" },
+            "node": [ 1, 2 ],
+            "message": "jsonPatch.noSuchIndex"
+        },
+        {
+            "op": { "op": "move", "from": "/a", "path": "/b/f" },
+            "node": { "a": "x", "b": "y" },
+            "message": "jsonPatch.parentNotContainer"
         }
     ],
     "ops": [
