@@ -8,7 +8,7 @@ import com.github.fge.jsonpatch.JsonPatchException;
 import com.github.fge.jsonpatch.operation.policy.PathMissingPolicy;
 
 /**
- * JSON Patch {@code move} operation
+ * JSON Patch {@code move?} operation
  *
  * <p>For this operation, {@code from} points to the value to move, and {@code
  * path} points to the new location of the moved value.</p>
@@ -21,7 +21,8 @@ import com.github.fge.jsonpatch.operation.policy.PathMissingPolicy;
  *     <li>{@code -} appends at the end of an array.</li>
  * </ul>
  *
- * <p>It is an error condition if {@code from} does not point to a JSON value.
+ * <p>It is no error condition if {@code from} does not point to a JSON value,
+ * in this case nothing is done.
  * </p>
  *
  * <p>The specification adds another rule that the {@code from} path must not be
@@ -45,15 +46,15 @@ import com.github.fge.jsonpatch.operation.policy.PathMissingPolicy;
  *     [ { "x": "victim" } ]
  * </pre>
  */
-public final class MoveOperation
+public final class MoveOptionalOperation
     extends MoveOperationBase
 {
-    public static final String OPERATION_NAME = "move";
+    public static final String OPERATION_NAME = "move?";
 
     @JsonCreator
-    public MoveOperation(@JsonProperty("from") final JsonPointer from,
+    public MoveOptionalOperation(@JsonProperty("from") final JsonPointer from,
         @JsonProperty("path") final JsonPointer path)
     {
-        super(OPERATION_NAME, from, path, PathMissingPolicy.THROW);
+        super(OPERATION_NAME, from, path, PathMissingPolicy.SKIP);
     }
 }
